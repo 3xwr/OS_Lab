@@ -8,7 +8,7 @@
 
 static void* thread1_start(void* arg)
 {
-    //потока начал работу
+    //потока начал рабcоту
     std::cout << "\nTHREAD 1 STARTING" << std::endl;
     bool* ptr = (bool *) arg;
     while(!*ptr)
