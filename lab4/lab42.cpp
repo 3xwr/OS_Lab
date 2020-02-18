@@ -31,6 +31,6 @@ int main(int argc, char* argv[])
     std::cout << "\nPROGRAM 2 PARENT PROCESS ID - " << parent_pid << std::flush;
     std::cout << "\nPROGRAM 2 CHILD PROCESS ID - " << child_pid << std::flush;
     std::cout << std::endl;
-    //exit(5);
+    //exit(5) fix
     return 10;
 }
