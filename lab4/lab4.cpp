@@ -16,5 +16,6 @@ int main(int argc, char* argv[])
     std::cout << "PROGRAM 1 PROCESS ID - " << pid << std::endl;
     std::cout << "PROGRAM 1 PARENT PROCESS ID - " << ppid << std::endl;
     //exit(2);
+    //разобраться с exit code'ом
     return 0;
 }
