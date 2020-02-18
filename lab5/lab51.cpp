@@ -3,23 +3,22 @@
 #include <semaphore.h>
 #include <fstream>
 #include <unistd.h>
-#include <iostream> /*debug*/
-#include <pthread.h>
+#include <iostream>
 
 bool thread_close = false;
 sem_t* semaphore;
-std::ofstream text_file;
+FILE *f;
+#define FILE_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
 
 static void* thread_function(void* arg)
 {
-
     char symb = '2';
     while(!thread_close)
     {
         sem_wait(semaphore);
         for(int i = 0; i < 5; i++)
         {
-            text_file << symb;
+            fputc(symb,f);
             sleep(0.1);
         }
         sem_post(semaphore);
@@ -29,15 +28,15 @@ static void* thread_function(void* arg)
 
 int main()
 {
-    semaphore = sem_open("/semaphore", O_CREAT | O_EXCL ,0777, 0);
+    semaphore = sem_open("/semaphore2", O_CREAT | O_EXCL, FILE_MODE, 1);
     pthread_t thread;
-    text_file.open("file.txt");
+    f = fopen("test.txt", "a");
     pthread_create(&thread, NULL,thread_function, NULL);
     getchar();
     thread_close = true;
     pthread_join(thread, NULL);
-    text_file.close();
+    fclose(f);
     sem_close(semaphore);
-    sem_unlink("/semaphore");
+    sem_unlink("/semaphore2");
     return 0;
 }
