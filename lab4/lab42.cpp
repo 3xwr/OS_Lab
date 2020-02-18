@@ -9,7 +9,7 @@
 static int child(void* args)
 {
     char** arg = (char** ) args;
-    std::cout << "ENTERED CHILD PROCESS\n";
+    std::cout << "ENTERED CHILD PROCESS\n\n";
     execvpe(arg[0], arg, NULL);
     return 5;
 }
@@ -25,11 +25,11 @@ int main(int argc, char* argv[])
     pid_t child_pid = clone(child,stack, SIGCHLD, arg);
     int status;
     waitpid(child_pid, &status, 0);
-    std::cout << "CHILD EXITED WITH CODE " << status << std::flush;
+    std::cout << "\n\nCHILD EXITED WITH CODE " << status << std::flush;
     std::cout << std::endl;
-    std::cout << "PROGRAM 2 PROCESS ID - " << pid << std::flush;
-    std::cout << "\nPROGRAM 2 PARENT PROCESS ID - " << parent_pid << std::flush;
-    std::cout << "\nPROGRAM 2 CHILD PROCESS ID - " << child_pid << std::flush;
+    std::cout << "PROGRAM 3 PROCESS ID - " << pid << std::flush;
+    std::cout << "\nPROGRAM 3 PARENT PROCESS ID - " << parent_pid << std::flush;
+    std::cout << "\nPROGRAM 3 CHILD PROCESS ID - " << child_pid << std::flush;
     std::cout << std::endl;
     //exit(5) fix
     return 10;
