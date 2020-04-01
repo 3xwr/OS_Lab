@@ -8,7 +8,7 @@
 bool thread_close = false;
 sem_t* semaphore;
 FILE *f;
-#define FILE_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+//#define FILE_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
 
 static void* thread_function(void* arg)
 {
@@ -16,22 +16,23 @@ static void* thread_function(void* arg)
     while(!thread_close)
     {
         sem_wait(semaphore);
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 10; i++)
         {
             fputc(symb,f);
-            sleep(0.1);
+            std::cout << symb << std::flush;
+            //sleep(1);
         }
         sem_post(semaphore);
-        sleep(1);
+        sleep(5);
     }
 }
 
 int main()
 {
     //sem_unlink("/semaphore");
-    semaphore = sem_open("/semaphore", O_CREAT | O_EXCL, 0777, 1);
+    semaphore = sem_open("/semaphore", 0);
     pthread_t thread;
-    f = fopen("test.txt", "a");
+    f = fopen("test.txt", "a+");
     pthread_create(&thread, NULL,thread_function, NULL);
     getchar();
     thread_close = true;
