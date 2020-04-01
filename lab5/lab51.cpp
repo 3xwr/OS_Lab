@@ -23,14 +23,14 @@ static void* thread_function(void* arg)
             //sleep(1);
         }
         sem_post(semaphore);
-        sleep(5);
+        sleep(3);
     }
 }
 
 int main()
 {
     //sem_unlink("/semaphore");
-    semaphore = sem_open("/semaphore", 0);
+    semaphore = sem_open("/semaphore", O_CREAT , 0777, 1);
     pthread_t thread;
     f = fopen("test.txt", "a+");
     pthread_create(&thread, NULL,thread_function, NULL);
